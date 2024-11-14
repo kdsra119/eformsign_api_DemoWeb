@@ -101,11 +101,10 @@ export const categories = [
         id: 'User',
         name: '회원 정보 관리',
         subcategories: [
-            { id: 'User-info', name: '회원 정보 조회' },
             { id: 'User-edit', name: '회원 정보 수정' }
         ]
     },
-    {
+    /*{
         id: 'webhook-demo',
         name: 'Webhook Demo',
         subcategories: [
@@ -123,6 +122,6 @@ export const categories = [
             { id: 'embedding-callback', name: '응답 확인 및 콜백 설정' },
             { id: 'embedding-status', name: '이용현황' }
         ]
-    }
+    }*/
   // 필요에 따라 더 많은 카테고리와 서브카테고리를 추가할 수 있습니다.
 ];
