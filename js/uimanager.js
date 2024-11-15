@@ -14,31 +14,36 @@ export function loadCategories() {
 
     // 카테고리 로드
     categories.forEach(category => {
-        // id가 'embedding-demo'인 경우 특별한 동작 설정
-        if (category.id === 'embedding-demo') {
-            categoryHTML += `<button onclick="openEmbeddingPopup()">${category.name}</button>`;
+        // id가 'webhook-demo'인 경우 특별한 동작 설정 (팝업 호출)
+        if (category.id === 'webhook-demo') {
+            categoryHTML += `<button onclick="openWebhookPopup()">${category.name}</button>`;
         } else {
             categoryHTML += `<button onclick="toggleDropdown('${category.id}')">${category.name}</button>`;
         }
         categoryHTML += `<div id="${category.id}" class="dropdown-content" style="display: none;">`;
 
         // 소분류 로드
-        category.subcategories.forEach(subcat => {
-            if (subcat.subgroups) {
-                // 하위 그룹 로드
-                categoryHTML += `<button onclick="toggleDropdown('${subcat.id}')">${subcat.name}</button>`;
-                categoryHTML += `<div id="${subcat.id}" class="dropdown-content" style="display: none;">`;
+        if (Array.isArray(category.subcategories) && category.subcategories.length > 0) {
+            category.subcategories.forEach(subcat => {
+                if (subcat.subgroups) {
+                    // 하위 그룹 로드
+                    categoryHTML += `<button onclick="toggleDropdown('${subcat.id}')">${subcat.name}</button>`;
+                    categoryHTML += `<div id="${subcat.id}" class="dropdown-content" style="display: none;">`;
 
-                // 하위 그룹의 소분류 표시
-                subcat.subgroups.forEach(subgroup => {
-                    categoryHTML += `<a href="#" onclick="showForm('${subgroup.id}')">${subgroup.name}</a>`;
-                });
-                categoryHTML += `</div>`;
-            } else {
-                // 하위 그룹이 없는 경우
-                categoryHTML += `<a href="#" onclick="showForm('${subcat.id}')">${subcat.name}</a>`;
-            }
-        });
+                    // 하위 그룹의 소분류 표시
+                    subcat.subgroups.forEach(subgroup => {
+                        categoryHTML += `<a href="#" onclick="showForm('${subgroup.id}')">${subgroup.name}</a>`;
+                    });
+                    categoryHTML += `</div>`;
+                } else {
+                    // 하위 그룹이 없는 경우
+                    categoryHTML += `<a href="#" onclick="showForm('${subcat.id}')">${subcat.name}</a>`;
+                }
+            });
+        } else {
+            // `subcategories`가 없거나 빈 경우 처리 (예: Webhook Demo)
+            categoryHTML += `<p style="padding-left: 10px; color: #888;">No subcategories available</p>`;
+        }
 
         categoryHTML += `</div>`;
     });
@@ -47,12 +52,12 @@ export function loadCategories() {
     sidebar.innerHTML = categoryHTML;
 }
 
-// 새 창 팝업 호출 함수
-function openEmbeddingPopup() {
+// Webhook Demo 팝업 호출 함수
+window.openWebhookPopup = function() {
     const popupUrl = "https://eformsign-api-demo-web.vercel.app/webhook.html";
     const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
-    window.open(popupUrl, "Embedding Demo", popupOptions);
-}
+    window.open(popupUrl, "Webhook Demo", popupOptions);
+};
 
 export function toggleDropdown(categoryId) {
     const dropdownContent = document.getElementById(categoryId);
