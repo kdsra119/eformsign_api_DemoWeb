@@ -104,14 +104,10 @@ export const categories = [
             { id: 'User-edit', name: '회원 정보 수정' }
         ]
     },
-    /*{
+    {
         id: 'webhook-demo',
-        name: 'Webhook Demo',
-        subcategories: [
-            { id: 'webhook-structure', name: '웹훅 구조 및 종류' },
-            { id: 'webhook-test', name: '이벤트 웹훅 테스트' }
-        ]
-    },
+        name: 'Webhook Demo'
+    }, /*
     {
         id: 'embedding-demo',
         name: '임베딩 Demo',

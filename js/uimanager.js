@@ -14,7 +14,12 @@ export function loadCategories() {
 
     // 카테고리 로드
     categories.forEach(category => {
-        categoryHTML += `<button onclick="toggleDropdown('${category.id}')">${category.name}</button>`;
+        // id가 'embedding-demo'인 경우 특별한 동작 설정
+        if (category.id === 'embedding-demo') {
+            categoryHTML += `<button onclick="openEmbeddingPopup()">${category.name}</button>`;
+        } else {
+            categoryHTML += `<button onclick="toggleDropdown('${category.id}')">${category.name}</button>`;
+        }
         categoryHTML += `<div id="${category.id}" class="dropdown-content" style="display: none;">`;
 
         // 소분류 로드
@@ -40,6 +45,13 @@ export function loadCategories() {
 
     // 생성된 HTML을 사이드바에 삽입
     sidebar.innerHTML = categoryHTML;
+}
+
+// 새 창 팝업 호출 함수
+function openEmbeddingPopup() {
+    const popupUrl = "https://eformsign-api-demo-web.vercel.app/webhook.html";
+    const popupOptions = "width=800,height=600,scrollbars=yes,resizable=yes";
+    window.open(popupUrl, "Embedding Demo", popupOptions);
 }
 
 export function toggleDropdown(categoryId) {
