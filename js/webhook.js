@@ -16,13 +16,25 @@ function updateWebhookList(data) {
   const listContainer = document.getElementById('webhookList');
   listContainer.innerHTML = ''; // 기존 리스트 초기화
 
-  data.forEach((webhookData, index) => {
+  data.forEach(webhookData => {
       const listItem = document.createElement('div');
-      listItem.textContent = `Webhook ${index + 1}`;
-      listItem.style.cursor = 'pointer';
       
+      // 타이틀 포맷: 현재 시간 (dd/yy hh:mm)_"document_id"_"document_status"
+      const now = new Date();
+      const timeString = `${now.getDate()}/${now.getMonth() + 1} ${now.getHours()}:${now.getMinutes()}`;
+      const title = `${timeString}_${webhookData.document?.id || ''}_${webhookData.document?.status || ''}`;
+      
+      listItem.textContent = title;
+      listItem.style.cursor = 'pointer';
+      listItem.style.padding = '5px';
+      listItem.style.margin = '5px 0';
+      listItem.style.borderBottom = '1px solid #ccc';
+
       // 리스트 항목 클릭 시, 상세 데이터 표시
-      listItem.onclick = () => showWebhookDetails(webhookData);
+      listItem.onclick = () => {
+          showWebhookDetails(webhookData);
+          updateWebhookInfo(webhookData); // 하단 정보 업데이트
+      };
 
       listContainer.appendChild(listItem);
   });
@@ -32,6 +44,14 @@ function updateWebhookList(data) {
 function showWebhookDetails(webhookData) {
   const detailsContainer = document.getElementById('webhookDetails');
   detailsContainer.innerHTML = `<pre>${JSON.stringify(webhookData, null, 2)}</pre>`;
+}
+
+// 선택된 웹훅의 주요 정보를 하단에 표시하는 함수
+function updateWebhookInfo(webhookData) {
+  document.getElementById('document_id').value = webhookData.document?.id || '';
+  document.getElementById('template_id').value = webhookData.document?.template_id || '';
+  document.getElementById('document_status').value = webhookData.document?.status || '';
+  document.getElementById('document_name').value = webhookData.document?.title || '';
 }
 
 // 5초마다 웹훅 데이터를 가져옴 (폴링)

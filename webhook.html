@@ -7,12 +7,36 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="webhookContainer" style="display: flex;">
-        <div id="webhookList" style="width: 50%; overflow-y: auto;">
-            <!-- 웹훅 리스트를 추가할 공간 -->
+    <div id="webhookContainer" style="display: flex; flex-direction: column; height: 100vh;">
+        <!-- 상단 (기존 왼쪽, 오른쪽 분할) -->
+        <div style="flex: 8; display: flex; padding: 10px;">
+            <div id="webhookList" style="width: 50%; overflow-y: auto; margin-right: 10px; border-right: 1px solid #ccc;">
+                <!-- 웹훅 리스트를 추가할 공간 -->
+            </div>
+            <div id="webhookDetails" style="width: 50%; overflow-y: auto; padding-left: 10px;">
+                <!-- 선택된 웹훅의 상세 JSON 구조를 표시할 공간 -->
+            </div>
         </div>
-        <div id="webhookDetails" style="width: 50%; overflow-y: auto;">
-            <!-- 선택된 웹훅의 상세 JSON 구조를 표시할 공간 -->
+
+        <!-- 하단 (id-value 형식) -->
+        <div id="webhookInfo" style="flex: 2; padding: 10px; display: flex; flex-direction: column; gap: 5px;">
+            <!-- ID-Value 형식으로 선택된 값 표시 -->
+            <div>
+                <label for="document_id">Document ID:</label>
+                <input type="text" id="document_id" readonly>
+            </div>
+            <div>
+                <label for="template_id">Template ID:</label>
+                <input type="text" id="template_id" readonly>
+            </div>
+            <div>
+                <label for="document_status">Document Status:</label>
+                <input type="text" id="document_status" readonly>
+            </div>
+            <div>
+                <label for="document_name">Document Name:</label>
+                <input type="text" id="document_name" readonly>
+            </div>
         </div>
     </div>
 
